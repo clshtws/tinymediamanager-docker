@@ -1,17 +1,15 @@
 #
 # TinyMediaManager Dockerfile
 #
-FROM jlesage/baseimage-gui:alpine-3.22-glibc
+FROM jlesage/baseimage-gui:	alpine-3.22
 
 # Define software versions.
-ARG JAVAJRE_VERSION=8.342.07.4
 ARG TMM_VERSION_MAJOR=5
 ARG TMM_VERSION=5.1.7
 
 # Define software download URLs.
 #ARG TMM_URL=https://release.tinymediamanager.org/v3/dist/tmm_${TMM_VERSION}_linux.tar.gz
 ARG TMM_URL=https://release.tinymediamanager.org/v${TMM_VERSION_MAJOR}/dist/tinyMediaManager-${TMM_VERSION}-linux-amd64.tar.xz
-ARG JAVAJRE_URL=https://corretto.aws/downloads/resources/${JAVAJRE_VERSION}/amazon-corretto-${JAVAJRE_VERSION}-linux-x64.tar.gz
 # Define working directory.
 WORKDIR /tmp
 
@@ -37,13 +35,15 @@ RUN \
 
 # Install dependencies.
 RUN \
-    add-pkg \
+    apk add --no-cache \
         # For the 7-Zip-JBinding workaround, Oracle JRE is needed instead of
         # the Alpine Linux's openjdk native package.
         # The libstdc++ package is also needed as part of the 7-Zip-JBinding
         # workaround.
         #openjdk8-jre \
         ffmpeg \
+        gcompat \
+        libstdc++ \
         libmediainfo \
         ttf-dejavu \
         bash
