@@ -61,7 +61,7 @@ COPY VERSION /
 
 RUN \
     chmod +x /startapp.sh && \
-    chmod +x /etc/cont-init.d/tmm.sh
+    chmod +x /etc/cont-init.d/101-tmm.sh
 
 # Set environment variables.
 ENV APP_NAME="TinyMediaManager" \
