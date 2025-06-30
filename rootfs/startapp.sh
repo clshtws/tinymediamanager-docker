@@ -30,7 +30,7 @@ is_tmm_running() {
 }
 
 start_tmm() {
-        /opt/jre/bin/java -Dsilent=noupdate -jar /config/getdown.jar /config > /config/logs/output.log 2>&1 &
+        java -Dsilent=noupdate -jar /config/getdown.jar /config > /config/logs/output.log 2>&1 &
 }
 
 kill_tmm() {

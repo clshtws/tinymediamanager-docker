@@ -27,11 +27,7 @@ RUN \
     echo "https://apk.corretto.aws/" >> /etc/apk/repositories && \
     apk update && \
     apk add amazon-corretto-21
-#RUN \
-    #add-pkg --virtual build-dependencies curl && \
-    #mkdir /opt/jre && \
-    #curl -# -L ${JAVAJRE_URL} | tar -xz --strip 2 -C /opt/jre amazon-corretto-${JAVAJRE_VERSION}-linux-x64/jre && \
-    #del-pkg build-dependencies
+
 
 # Install dependencies.
 RUN \
@@ -63,6 +59,10 @@ RUN \
 COPY rootfs/ /
 COPY VERSION /
 
+RUN \
+    chmod +x /startapp.sh && \
+    chmod +x /etc/cont-init.d/tmm.sh
+
 # Set environment variables.
 ENV APP_NAME="TinyMediaManager" \
     S6_KILL_GRACETIME=8000
@@ -72,9 +72,10 @@ VOLUME ["/config"]
 VOLUME ["/media"]
 
 # Metadata.
-LABEL \
-      org.label-schema.name="tinymediamanager" \
-      org.label-schema.description="Docker container for TinyMediaManager" \
-      org.label-schema.version="unknown" \
-      org.label-schema.vcs-url="https://github.com/romancin/tmm-docker" \
-      org.label-schema.schema-version="1.0"
+RUN set-cont-env APP_NAME "tinymediamanager"
+#LABEL \
+      #org.label-schema.name="tinymediamanager" \
+      #org.label-schema.description="Docker container for TinyMediaManager" \
+      #org.label-schema.version="unknown" \
+      #org.label-schema.vcs-url="https://github.com/romancin/tmm-docker" \
+      #org.label-schema.schema-version="1.0"
